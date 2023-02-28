@@ -2,10 +2,16 @@
 
 A cli tool to inject commas at the end of parameter and argument lists, because it looks so much better with a comma at the end
 
-## Installation
+## Installation / Usage
 
 ```sh
-dart pub global activate dart-comma-injector
+dart pub global activate dart_comma_injector
+
+# Call with line/column
+dart_comma_injector ./path/to/file.dart --line 45 --column 8
+
+# Or via offset
+dart_comma_injector ./path/to/file.dart --offset 115
 ```
 
 ## Why
