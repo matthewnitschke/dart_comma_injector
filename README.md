@@ -52,4 +52,4 @@ dart_comma_injector ./path/to/file.dart --offset 115
 
 ### vscode
 
-See the `vscode` directory
+There is a `.vsix` file within the `vscode` directory that can be downloaded and installed manually. TBD on if I publish it...
