@@ -35,8 +35,10 @@ Future<void> main(List<String> args) async {
   );
 
   if (commaOffset != null) {
-    File(path).writeAsStringSync(
-      content.substring(0, commaOffset) + ',' + content.substring(commaOffset)
-    );
+    if (content[commaOffset] != ',') {  
+      File(path).writeAsStringSync(
+        content.substring(0, commaOffset) + ',' + content.substring(commaOffset)
+      );
+    }
   }
 }
