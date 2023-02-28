@@ -2,18 +2,6 @@
 
 A cli tool to inject commas at the end of parameter and argument lists, because it looks so much better with a comma at the end
 
-## Installation / Usage
-
-```sh
-dart pub global activate dart_comma_injector
-
-# Call with line/column
-dart_comma_injector ./path/to/file.dart --line 45 --column 8
-
-# Or via offset
-dart_comma_injector ./path/to/file.dart --offset 115
-```
-
 ## Why
 
 The default dart formatter does some weird things with long parameter lists
@@ -46,3 +34,22 @@ void func(
 ```
 
 Because I'm lazy, this cli tool (which is designed to be run from a IDE extension), will inject a comma at the end of the list, so the formatter outputs prettier results
+
+
+## Installation / Usage
+
+### CLI
+
+```sh
+dart pub global activate dart_comma_injector
+
+# Call with line/column
+dart_comma_injector ./path/to/file.dart --line 45 --column 8
+
+# Or via offset
+dart_comma_injector ./path/to/file.dart --offset 115
+```
+
+### vscode
+
+See the `vscode` directory
