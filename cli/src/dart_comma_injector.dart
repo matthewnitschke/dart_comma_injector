@@ -21,33 +21,35 @@ class _AstLocator extends GeneralizingAstVisitor {
   int _searchOffset;
 
   int? commaOffset;
-
-  bool _isSearching = true;
+  int lastRangeLength = 999999;
 
   _AstLocator(this._searchOffset);
 
   @override
   void visitNode(AstNode node) {
     if (node.beginToken.offset <= _searchOffset && node.endToken.offset >= _searchOffset) {
-      if (node is FormalParameterList) {
-        _isSearching = false;
-        if (node.parameters.length > 0) {
-          final lastParam = node.parameters.last;
-          commaOffset = lastParam.endToken.offset + lastParam.endToken.length;
+      final rangeLength = node.endToken.offset - node.beginToken.offset;
+      if (rangeLength < lastRangeLength) {
+        lastRangeLength = rangeLength;
+
+        if (node is FormalParameterList) {
+          if (node.parameters.length > 0) {
+            final lastParam = node.parameters.last;
+            commaOffset = lastParam.endToken.offset + lastParam.endToken.length;
+          }
+        }
+
+        if (node is ArgumentList) {
+          if (node.arguments.length > 0) {
+            final lastParam = node.arguments.last;
+            commaOffset = lastParam.endToken.offset + lastParam.endToken.length;
+          }
         }
       }
 
-      if (node is ArgumentList) {
-        _isSearching = false;
-        if (node.arguments.length > 0) {
-          final lastParam = node.arguments.last;
-          commaOffset = lastParam.endToken.offset + lastParam.endToken.length;
-        }
-      }
     }
 
-    if (_isSearching) {
-      super.visitNode(node);
-    }
+    super.visitNode(node);
+    
   }
 }

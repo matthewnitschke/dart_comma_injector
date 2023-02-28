@@ -10,7 +10,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let postRunExecutable = vscode.workspace.getConfiguration('dartCommaInjector')
 		.get('postRunExecutable') as string;
 		
-	let disposable = vscode.commands.registerCommand('dartCommaInjector.inject', () => {
+	let disposable = vscode.commands.registerCommand('dart-comma-injector.inject', () => {
 		const editor = vscode.window.activeTextEditor;
 		if (editor == null) return;
 
@@ -25,13 +25,15 @@ export function activate(context: vscode.ExtensionContext) {
 			command = ['dart', join(__dirname, '../../', 'cli/bin/main.dart'), ...params].join(' ');
 		}
 
+		let afterRunCommand = '';
+		const workspaceRootPath = vscode.workspace.workspaceFolders?.[0].uri.fsPath;
+		if (postRunExecutable && workspaceRootPath) {
+			afterRunCommand = ` && ${postRunExecutable.replace('<filepath>', editor.document.uri.fsPath)}`
+		}
+
 		exec(
-			command,
-			() => {
-				if (postRunExecutable != null) {
-					exec(postRunExecutable.replace('<filepath>', editor.document.uri.fsPath));
-				}
-			}
+			command + afterRunCommand,
+			{ cwd: workspaceRootPath }
 		);
 	});
 

@@ -14,7 +14,14 @@
     "commands": [
       {
         "command": "dart-comma-injector.inject",
-        "title": "Inject Comma"
+        "title": "Inject Comma",
+        "when": "resourceLangId == dart"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "dart-comma-injector.inject",
+        "key": "cmd+shift+i"
       }
     ],
     "configuration": {
